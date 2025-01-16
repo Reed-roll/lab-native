@@ -20,7 +20,205 @@ const ExerciseScreen: React.FC = () => {
   const [fadeAnim] = useState(new Animated.Value(0));
 
   const questions: Question[] = [
-    // ... (keep the existing questions array)
+    // Hukum Newton I
+    {
+      id: 1,
+      law: 1,
+      question: "Sebuah buku berada di atas meja dalam keadaan diam. Apa yang dapat kamu simpulkan tentang gaya-gaya yang bekerja pada buku tersebut?",
+      options: [
+        "Tidak ada gaya yang bekerja pada buku",
+        "Gaya gravitasi lebih besar dari gaya normal",
+        "Resultan gaya yang bekerja pada buku sama dengan nol",
+        "Gaya normal lebih besar dari gaya gravitasi"
+      ],
+      correctAnswer: 2,
+      explanation: "Berdasarkan Hukum I Newton, jika sebuah benda diam, maka resultan gaya yang bekerja pada benda tersebut sama dengan nol (∑F = 0). Dalam kasus ini, gaya gravitasi yang menarik buku ke bawah diimbangi oleh gaya normal dari meja yang mendorong ke atas."
+    },
+    {
+      id: 2,
+      law: 1,
+      question: "Mengapa penumpang dalam mobil yang bergerak akan terdorong ke depan ketika mobil direm mendadak?",
+      options: [
+        "Karena gaya gravitasi menarik ke depan",
+        "Karena Hukum I Newton tentang kelembaman",
+        "Karena tekanan udara mendorong ke depan",
+        "Karena gaya gesek ban mendorong ke depan"
+      ],
+      correctAnswer: 1,
+      explanation: "Ini adalah contoh dari Hukum I Newton tentang kelembaman/inersia. Benda cenderung mempertahankan keadaan geraknya. Ketika mobil direm mendadak, tubuh penumpang cenderung mempertahankan gerak ke depan sesuai dengan keadaan sebelumnya."
+    },
+    {
+      id: 3,
+      law: 1,
+      question: "Ketika sebuah kereta berhenti tiba-tiba, penumpang yang tidak menggunakan sabuk pengaman cenderung terlempar ke depan. Apa penyebab utama fenomena ini?",
+      options: [
+        "Gaya gesek pada kereta",
+        "Hukum gravitasi",
+        "Kelembaman tubuh penumpang",
+        "Gaya normal dari kursi"
+      ],
+      correctAnswer: 2,
+      explanation: "Berdasarkan Hukum I Newton, tubuh penumpang cenderung mempertahankan gerakannya karena kelembaman."
+    },
+    {
+      id: 4,
+      law: 1,
+      question: "Jika sebuah benda berada dalam keadaan diam, apa yang dapat dikatakan tentang gaya-gaya yang bekerja pada benda tersebut?",
+      options: [
+        "Tidak ada gaya yang bekerja pada benda",
+        "Resultan gaya pada benda adalah nol",
+        "Semua gaya searah",
+        "Benda tidak memiliki massa"
+      ],
+      correctAnswer: 1,
+      explanation: "Hukum I Newton menyatakan bahwa benda diam memiliki resultan gaya nol (∑F = 0)."
+    },
+    {
+      id: 5,
+      law: 1,
+      question: "Mengapa sebuah bola akan berhenti jika digulirkan di lantai kasar?",
+      options: [
+        "Karena gaya gravitasi",
+        "Karena adanya gaya gesek",
+        "Karena benda tidak memiliki inersia",
+        "Karena gaya normal dari lantai"
+      ],
+      correctAnswer: 1,
+      explanation: "Gesekan dengan permukaan lantai mengurangi energi kinetik bola hingga berhenti."
+    },
+    // Hukum Newton II
+    {
+      id: 6,
+      law: 2,
+      question: "Jika gaya sebesar 10 N bekerja pada benda bermassa 2 kg, berapakah percepatan yang dialami benda tersebut?",
+      options: [
+        "2 m/s²",
+        "5 m/s²",
+        "8 m/s²",
+        "20 m/s²"
+      ],
+      correctAnswer: 1,
+      explanation: "Berdasarkan Hukum II Newton (F = m × a), jika F = 10 N dan m = 2 kg, maka a = F/m = 10/2 = 5 m/s². Semakin besar gaya yang diberikan, semakin besar percepatan yang dihasilkan."
+    },
+    {
+      id: 7,
+      law: 2,
+      question: "Apa yang terjadi pada percepatan sebuah benda jika gaya yang bekerja tetap tetapi massanya diperbesar dua kali lipat?",
+      options: [
+        "Percepatan menjadi dua kali lebih besar",
+        "Percepatan menjadi setengah kali lebih kecil",
+        "Percepatan tetap sama",
+        "Percepatan menjadi nol"
+      ],
+      correctAnswer: 1,
+      explanation: "Sesuai Hukum II Newton, percepatan berbanding terbalik dengan massa (a = F/m). Jika massa diperbesar dua kali lipat sementara gaya tetap, maka percepatan akan menjadi setengah dari nilai sebelumnya."
+    },
+    {
+      id: 8,
+      law: 2,
+      question: "Jika massa sebuah mobil 1000 kg dan percepatannya 2 m/s², berapa gaya yang dibutuhkan untuk mendorong mobil tersebut?",
+      options: [
+        "2000 N",
+        "500 N",
+        "1000 N",
+        "4000 N"
+      ],
+      correctAnswer: 1,
+      explanation: "Dengan F = m × a, gaya = 1000 × 2 = 2000 N."
+    },
+    {
+      id: 9,
+      law: 2,
+      question: "Jika gaya pada benda adalah 15 N dan percepatan 3 m/s², berapa massa benda tersebut?",
+      options: [
+        "2 kg",
+        "5 kg",
+        "10 kg",
+        "15 kg"
+      ],
+      correctAnswer: 2,
+      explanation: "Menggunakan F = m × a, massa = F/a = 15/3 = 5 kg."
+    },
+    {
+      id: 10,
+      law: 2,
+      question: "Jika gaya yang bekerja pada benda digandakan, tetapi massanya tetap, apa yang akan terjadi pada percepatan benda tersebut?",
+      options: [
+        "Tetap",
+        "Berkurang setengah",
+        "Bertambah dua kali",
+        "Menjadi nol"
+      ],
+      correctAnswer: 3,
+      explanation: "Percepatan berbanding lurus dengan gaya, sehingga jika gaya digandakan, percepatan juga meningkat dua kali lipat."
+    },
+  
+    // Hukum Newton III
+    {
+      id: 11,
+      law: 3,
+      question: "Ketika seorang anak melompat dari perahu kecil ke dermaga, perahu akan bergerak ke arah berlawanan. Hukum Newton manakah yang menjelaskan fenomena ini?",
+      options: [
+        "Hukum I Newton",
+        "Hukum II Newton",
+        "Hukum III Newton",
+        "Bukan termasuk Hukum Newton"
+      ],
+      correctAnswer: 2,
+      explanation: "Ini adalah contoh Hukum III Newton. Ketika anak memberikan gaya aksi dengan melompat ke depan, perahu mendapatkan gaya reaksi yang sama besar dengan arah berlawanan, menyebabkan perahu bergerak ke belakang."
+    },
+    {
+      id: 12,
+      law: 3,
+      question: "Saat kamu mendorong dinding, mengapa dinding juga mendorongmu kembali?",
+      options: [
+        "Karena dinding lebih kuat",
+        "Karena ada gaya gravitasi",
+        "Karena adanya gaya aksi-reaksi",
+        "Karena dinding tidak bergerak"
+      ],
+      correctAnswer: 2,
+      explanation: "Ini adalah aplikasi dari Hukum III Newton tentang gaya aksi-reaksi. Ketika kamu memberikan gaya aksi pada dinding, dinding memberikan gaya reaksi yang sama besar dengan arah berlawanan padamu (Faksi = -Freaksi)."
+    },
+    {
+      id: 13,
+      law: 3,
+      question: "Ketika kamu mendayung perahu ke depan, perahu bergerak ke belakang. Mengapa hal ini terjadi?",
+      options: [
+        "Karena perahu mendorong air",
+        "Karena gaya aksi-reaksi",
+        "Karena gaya gravitasi",
+        "Karena gaya normal"
+      ],
+      correctAnswer: 2,
+      explanation: "Ini adalah contoh gaya aksi-reaksi. Gaya aksi mendayung menghasilkan reaksi dari air yang mendorong perahu ke depan."
+    },
+    {
+      id: 14,
+      law: 3,
+      question: "Mengapa roket dapat bergerak di luar angkasa, meskipun tidak ada udara di sekitarnya?",
+      options: [
+        "Karena gaya gravitasi",
+        "Karena gaya aksi-reaksi dari gas yang dikeluarkan",
+        "Karena dorongan dari luar angkasa",
+        "Karena dorongan udara di dalam roket"
+      ],
+      correctAnswer: 2,
+      explanation: "Roket bergerak berdasarkan Hukum III Newton, di mana gas yang dikeluarkan menghasilkan reaksi dorongan ke arah sebaliknya."
+    },
+    {
+      id: 15,
+      law: 3,
+      question: "Apa yang terjadi ketika kamu memukul meja dengan tanganmu?",
+      options: [
+        "Meja memberikan reaksi dorongan pada tanganmu",
+        "Tanganmu tidak merasakan apa-apa",
+        "Meja tidak memberikan reaksi",
+        "Tanganmu bergerak lebih cepat"
+      ],
+      correctAnswer: 1,
+      explanation: "Hukum III Newton menyatakan bahwa gaya aksi (pukulan tangan) menghasilkan gaya reaksi dari meja yang dirasakan oleh tanganmu."
+    }
   ];
 
   const filteredQuestions = questions.filter(q => q.law === currentLaw);
