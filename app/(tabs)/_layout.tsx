@@ -25,7 +25,8 @@ export default function TabLayout() {
           },
           default: {},
         }),
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -38,6 +39,20 @@ export default function TabLayout() {
         options={{
           title: 'Lab',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="flask.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="material"
+        options={{
+          title: 'Material',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="exercise"
+        options={{
+          title: 'Exercise',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="bolt.fill" color={color} />,
         }}
       />
     </Tabs>
