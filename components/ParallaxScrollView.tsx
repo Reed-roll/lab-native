@@ -85,7 +85,7 @@ export default function ParallaxScrollView({
           headerAnimatedStyle,
         ]}>
         <LinearGradient
-          colors={gradientColors}
+          colors={gradientColors as [string, string, ...string[]]}
           style={StyleSheet.absoluteFill}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
