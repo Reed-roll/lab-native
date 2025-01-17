@@ -105,14 +105,12 @@ We welcome contributions to PhyLab! If you would like to contribute:
 ---
 
 ## License
-PhyLab is licensed under the [MIT License](LICENSE).
+PhyLab is licensed under the ITB
 
 ---
 
-## Contact
-For inquiries or support, feel free to contact us:
-- **Email:** support@phylab.com
-- **Website:** [www.phylab.com](http://www.phylab.com)
+## Website
+- **Website:** https://lab-native--bwyynjyp10.expo.app/
 
 ---
 
