@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import Canvas  from 'react-native-canvas';
+import Canvas from 'react-native-canvas';
 import Slider from '@react-native-community/slider';
 
-const width = Dimensions.get('window').width - 60;
-const height = Dimensions.get('window').height - 300;
+const width = Dimensions.get('window').width - 80;
+const height = Math.min(Dimensions.get('window').height * 0.5, Dimensions.get('window').height - 100);
 
 interface State {
   mass: number;
@@ -31,14 +31,14 @@ const initialState: State = {
   angle: 0,
   acceleration: { x: 0, y: 0 },
   velocity: { x: 0, y: 0 },
-  position: { x: width / 2, y: height - 140 },
+  position: { x: width / 2, y: height - 200},
   isForceApplied: false,
   friction: 1,
   elasticity: 0.8,
-  timeStep: 1/60,
+  timeStep: 1 / 60,
   forceAppliedTime: 0,
   maxForceTime: 0.1,
-  forceMagnitudeFactor: 0.5
+  forceMagnitudeFactor: 0.5,
 };
 
 export default function PhysicsSimulation() {
@@ -54,35 +54,35 @@ export default function PhysicsSimulation() {
   }, []);
 
   const resetPosition = () => {
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
-      position: { x: width / 2, y: height - 140 },
+      position: { x: width / 2, y: height - 140},
       velocity: { x: 0, y: 0 },
       acceleration: { x: 0, y: 0 },
-      isForceApplied: false
+      isForceApplied: false,
     }));
     positionX.value = width / 2;
     positionY.value = height - 140;
   };
 
   const applyForce = () => {
-    setState(prevState => {
+    setState((prevState) => {
       const angleRad = (prevState.angle - 90) * (Math.PI / 180);
       const scaledForce = (prevState.force * prevState.forceMagnitudeFactor) / prevState.mass;
       const newVelocityX = prevState.velocity.x + Math.cos(angleRad) * scaledForce;
       const newVelocityY = prevState.velocity.y + Math.sin(angleRad) * scaledForce;
-      
+
       return {
         ...prevState,
         isForceApplied: true,
         forceAppliedTime: 0,
-        velocity: { x: newVelocityX, y: newVelocityY }
+        velocity: { x: newVelocityX, y: newVelocityY },
       };
     });
   };
 
   const updatePhysics = () => {
-    setState(prevState => {
+    setState((prevState) => {
       if (!prevState.isForceApplied) return prevState;
 
       let scaledGravity = prevState.gravity * 0.1;
@@ -116,7 +116,7 @@ export default function PhysicsSimulation() {
       return {
         ...prevState,
         position: { x: newPositionX, y: newPositionY },
-        velocity: { x: newVelocityX, y: newVelocityY }
+        velocity: { x: newVelocityX, y: newVelocityY },
       };
     });
   };
@@ -134,8 +134,8 @@ export default function PhysicsSimulation() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.clearRect(0, 0, width, height - 100);
-    
+    ctx.clearRect(0, 0, width, height);
+
     ctx.beginPath();
     ctx.arc(state.position.x, state.position.y, 30, 0, Math.PI * 2);
     ctx.fillStyle = '#3498db';
@@ -177,24 +177,26 @@ export default function PhysicsSimulation() {
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
-        { translateX: withSpring(positionX.value - 30) },
-        { translateY: withSpring(positionY.value - 30) },
+        { translateX: positionX.value }, // Remove the -30 offset
+        { translateY: positionY.value }, // Remove the -30 offset
       ],
     };
   });
 
   return (
     <View style={styles.container}>
-      <Canvas ref={canvasRef} style={styles.canvas} />
-      <Animated.View style={[styles.object, animatedStyle]} />
-      <View style={styles.controls}>
+      <View style={styles.canvasContainer}>
+        <Canvas ref={canvasRef} style={styles.canvas} />
+        <Animated.View style={[styles.object, animatedStyle]} />
+      </View>
+      <ScrollView style={styles.controls}>
         <Text>Mass: {state.mass} kg</Text>
         <Slider
           style={styles.slider}
           minimumValue={1}
           maximumValue={10}
           value={state.mass}
-          onValueChange={(value) => setState(prevState => ({ ...prevState, mass: value }))}
+          onValueChange={(value) => setState((prevState) => ({ ...prevState, mass: value }))}
         />
         <Text>Gravity: {state.gravity.toFixed(1)} m/s²</Text>
         <Slider
@@ -202,7 +204,7 @@ export default function PhysicsSimulation() {
           minimumValue={0}
           maximumValue={20}
           value={state.gravity / 9.8}
-          onValueChange={(value) => setState(prevState => ({ ...prevState, gravity: value * 9.8 }))}
+          onValueChange={(value) => setState((prevState) => ({ ...prevState, gravity: value * 9.8 }))}
         />
         <Text>Force: {state.force} N</Text>
         <Slider
@@ -210,7 +212,7 @@ export default function PhysicsSimulation() {
           minimumValue={0}
           maximumValue={100}
           value={state.force}
-          onValueChange={(value) => setState(prevState => ({ ...prevState, force: value }))}
+          onValueChange={(value) => setState((prevState) => ({ ...prevState, force: value }))}
         />
         <Text>Angle: {Math.round(state.angle)}°</Text>
         <Slider
@@ -218,7 +220,7 @@ export default function PhysicsSimulation() {
           minimumValue={0}
           maximumValue={360}
           value={state.angle}
-          onValueChange={(value) => setState(prevState => ({ ...prevState, angle: value }))}
+          onValueChange={(value) => setState((prevState) => ({ ...prevState, angle: value }))}
         />
         <TouchableOpacity style={styles.button} onPress={applyForce}>
           <Text style={styles.buttonText}>Apply Force</Text>
@@ -226,7 +228,7 @@ export default function PhysicsSimulation() {
         <TouchableOpacity style={styles.button} onPress={resetPosition}>
           <Text style={styles.buttonText}>Reset</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -236,9 +238,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F0F0F0',
   },
+  canvasContainer: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   canvas: {
     width: width,
-    height: height - 100,
+    height: height,
+    borderWidth: 2,
+    borderColor: '#000',
+    minHeight: 400
   },
   object: {
     position: 'absolute',
@@ -248,9 +258,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#3498db',
     borderWidth: 2,
     borderColor: '#2980b9',
+    top: -30,
+    left: -30,
   },
   controls: {
+    flex: 1,
     padding: 10,
+    backgroundColor: '#FFF',
+    minHeight: 400
   },
   slider: {
     width: '100%',
@@ -268,4 +283,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-

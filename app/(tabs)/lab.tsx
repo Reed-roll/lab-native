@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import PhysicsSimulation from '@/components/PhysicsSimulation';
@@ -28,7 +28,7 @@ export default function TabTwoScreen() {
           <ThemedText style={styles.text}>Configure the variables below and start experimenting!</ThemedText>
         </GlassPanel>
         <SafeAreaView style={styles.simulationContainer}>
-          <StatusBar barStyle="dark-content" />
+          {/* <StatusBar barStyle="dark-content" /> */}
           <PhysicsSimulation />
         </SafeAreaView>
       </ThemedView>
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
   },
   simulationContainer: {
     flex: 1,
-    width: '100%',
   },
 });
 
