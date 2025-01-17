@@ -1,12 +1,9 @@
 import React from 'react';
 import { StyleSheet, Animated, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { ScrollView } from 'react-native-gesture-handler';
 import { GlassPanel } from '@/components/GlassPanel';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
@@ -15,6 +12,7 @@ type RootTabParamList = {
   lab: undefined;
   material: undefined;
   exercise: undefined;
+  settings: undefined;
 };
 
 type HomeScreenNavigationProp = BottomTabNavigationProp<RootTabParamList, 'index'>;

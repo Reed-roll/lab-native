@@ -1,140 +1,113 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Animated, TouchableOpacity, View, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import { StyleSheet, View, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import auth from '@react-native-firebase/auth';
-import { FirebaseError } from '@firebase/util';
-
 import { Text } from 'react-native';
+
+interface UserProfile {
+  email: string;
+  name: string;
+  joinDate: string;
+}
 
 export default function Settings() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [isLogin, setIsLogin] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
-  const fadeAnim = React.useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
-  const signUp = async () => {
-    if (password !== confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-    setLoading(true);
-    try {
-      await auth().createUserWithEmailAndPassword(email, password);
-      alert('User account created & signed in!');
-    } catch (e: any) {
-      const err = e as FirebaseError;
-      alert('Registration failed! ' + err.message);
-    } finally {
-      setLoading(false);
-    }
+  const handleSubmit = () => {
+    // Mock authentication
+    setIsAuthenticated(true);
+    setUserProfile({
+      email: email,
+      name: 'User Name',
+      joinDate: new Date().toLocaleDateString()
+    });
   };
 
-  const signIn = async () => {
-    setLoading(true);
-    try {
-      await auth().signInWithEmailAndPassword(email, password);
-      alert('User signed in!');
-    } catch (e: any) {
-      const err = e as FirebaseError;
-      alert('Sign in failed! ' + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const toggleMode = () => {
-    setMode(mode === 'signin' ? 'signup' : 'signin');
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUserProfile(null);
+    setEmail('');
     setPassword('');
-    setConfirmPassword('');
   };
+
+  if (isAuthenticated && userProfile) {
+    return (
+      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.container}>
+        <View style={styles.card}>
+          <View style={styles.profileHeader}>
+            <View style={styles.avatarContainer}>
+              <Text style={styles.avatarText}>{userProfile.name[0]}</Text>
+            </View>
+            <Text style={styles.profileName}>{userProfile.name}</Text>
+            <Text style={styles.profileEmail}>{userProfile.email}</Text>
+          </View>
+
+          <View style={styles.profileInfo}>
+            <Text style={styles.infoLabel}>Member since</Text>
+            <Text style={styles.infoValue}>{userProfile.joinDate}</Text>
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleLogout}>
+            <LinearGradient colors={['#ff6b6b', '#ee5253']} style={styles.gradient}>
+              <Text style={styles.buttonText}>Logout</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.formContainer}
-      >
-        <Animated.View style={[styles.formInner, { opacity: fadeAnim }]}>
-          <View style={styles.card}>
-            <Text style={styles.title}>
-              {mode === 'signin' ? 'Sign In' : 'Sign Up'}
-            </Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-                placeholder='Email'
-                placeholderTextColor="#999"
-                autoCapitalize='none'
-                keyboardType='email-address'
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                placeholder='Password'
-                placeholderTextColor="#999"
-              />
-            </View>
-            {mode === 'signup' && (
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                  secureTextEntry
-                  placeholder='Confirm Password'
-                  placeholderTextColor="#999"
-                />
-              </View>
-            )}
-            {loading ? (
-              <ActivityIndicator size="large" color="#FF6B6B" style={styles.loader} />
-            ) : (
-              <TouchableOpacity
-                style={styles.button}
-                onPress={mode === 'signin' ? signIn : signUp}
-              >
-                <LinearGradient
-                  colors={['#FF6B6B', '#4ECDC4']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                  style={styles.gradient}
-                >
-                  <Text style={styles.buttonText}>
-                    {mode === 'signin' ? 'Sign In' : 'Sign Up'}
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity onPress={toggleMode} style={styles.toggleButton}>
-              <Text style={styles.toggleText}>
-                {mode === 'signin' 
-                  ? "Don't have an account? Sign Up" 
-                  : "Already have an account? Sign In"}
-              </Text>
-            </TouchableOpacity>
+    <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
+        <View style={styles.card}>
+          <Text style={styles.title}>{isLogin ? 'Welcome Back' : 'Create Account'}</Text>
+          
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="#666"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+            />
           </View>
-        </Animated.View>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="#666"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <LinearGradient colors={['#4c669f', '#3b5998']} style={styles.gradient}>
+              <Text style={styles.buttonText}>
+                {isLogin ? 'Sign In' : 'Sign Up'}
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.toggleButton}
+            onPress={() => setIsLogin(!isLogin)}
+          >
+            <Text style={styles.toggleText}>
+              {isLogin ? "Need an account? Sign up" : "Have an account? Sign in"}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -208,5 +181,48 @@ const styles = StyleSheet.create({
     color: '#666',
     fontSize: 14,
   },
+  profileHeader: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  avatarContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#3b5998',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  avatarText: {
+    fontSize: 32,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  profileName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+  },
+  profileEmail: {
+    fontSize: 16,
+    color: '#666',
+  },
+  profileInfo: {
+    backgroundColor: '#f5f5f5',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  infoLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 5,
+  },
+  infoValue: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  }
 });
-

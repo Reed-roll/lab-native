@@ -1,10 +1,11 @@
 import { Tabs } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Platform } from 'react-native';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
@@ -37,28 +38,28 @@ export default function TabLayout() {
         name="lab"
         options={{
           title: 'Lab',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="flask.fill" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={24} name="flask" color={color} />,
         }}
       />
       <Tabs.Screen
         name="material"
         options={{
           title: 'Material',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.fill" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={24} name="book" color={color} />,
         }}
       />
       <Tabs.Screen
         name="exercise"
         options={{
           title: 'Exercise',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="bolt.fill" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome5 size={24} name="dumbbell" color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="gear" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={24} name="gear" color={color} />,
         }}
       />
     </Tabs>
