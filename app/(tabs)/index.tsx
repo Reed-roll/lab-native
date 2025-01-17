@@ -12,7 +12,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 type RootTabParamList = {
   index: undefined;
-  explore: undefined;
+  lab: undefined;
   material: undefined;
   exercise: undefined;
 };
@@ -33,7 +33,7 @@ export default function HomeScreen() {
   }, []);
 
   const navigateToLab = () => {
-    navigation.navigate('explore'); // Sesuaikan dengan nama rute
+    navigation.navigate('lab'); // Sesuaikan dengan nama rute
   };
   
 
