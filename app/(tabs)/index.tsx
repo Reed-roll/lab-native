@@ -5,6 +5,8 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { ScrollView } from 'react-native-gesture-handler';
 import { GlassPanel } from '@/components/GlassPanel';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 

@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/Icon-lab.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.reeddev.labnative"
+      "package": "com.reeddev.labnative",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -33,7 +34,10 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-build-properties",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
     ],
     "experiments": {
       "typedRoutes": true

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "689037856142",
+    "project_id": "native-lab",
+    "storage_bucket": "native-lab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689037856142:android:7bce16c8e1a7803fe428df",
+        "android_client_info": {
+          "package_name": "com.reeddev.labnative"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjazDNVydo13L3uT4ECtFvjo4c_13Y3mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
